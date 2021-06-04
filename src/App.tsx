@@ -41,7 +41,7 @@ function App() {
 
   return (
     <div className={componentName}>
-      <h1 className={`${componentName}_title`}>OSE Swiss Knife</h1>
+      <h1 className={`${componentName}_title`}>B/X Swiss Knife</h1>
       <Stack />
     </div>
   );
