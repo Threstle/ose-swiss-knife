@@ -1,7 +1,7 @@
 import { Router } from "@cher-ami/router";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-
+import "./index.less";
 import App from "./App";
 import TrackerPage from "./pages/trackerPage/TrackerPage";
 

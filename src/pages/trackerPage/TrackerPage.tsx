@@ -1,5 +1,6 @@
 import React, { forwardRef, useEffect, useReducer, useRef, useState } from "react";
 import { useImmerReducer } from "use-immer";
+import Popin from "../../components/popin/Popin";
 import useInput from "../../hooks/useInput";
 import useKey from "../../hooks/useKey";
 import './TrackerPage.less';
@@ -15,7 +16,8 @@ const componentName = "TrackerPage";
 const initialState: State = {
     turn: 0,
     turnFraction: 0,
-    timedEvents: []
+    timedEvents: [],
+    notifications: []
 };
 
 //@ts-ignore
@@ -44,7 +46,11 @@ const reducer = (state: State, action) => {
             state.turn = initialState.turn;
             state.turnFraction = initialState.turnFraction;
             state.timedEvents = initialState.timedEvents;
+            state.notifications = initialState.notifications;
             break;
+
+        case "EMPTY_NOTIFICATIONS":
+            state.notifications = []; break;
 
         case "UPDATE_TIMED_EVENTS":
 
@@ -52,7 +58,8 @@ const reducer = (state: State, action) => {
 
                 event.remainingTurns = event.beginning + event.length - state.turn;
                 if (event.remainingTurns <= 0) {
-
+                    console.log(state.notifications);
+                    state.notifications.push(event.name);
                     // alert(event.name);
 
                     if (event.repeat) {
@@ -84,7 +91,9 @@ const HomePage = forwardRef((props: IProps) => {
 
     const key = useKey();
 
-    let [state, dispatch] = useImmerReducer(reducer, JSON.parse(localStorage.getItem(STORAGE_KEY)) || initialState);
+    let [state, dispatch] = useImmerReducer(reducer, initialState);
+
+    const [popinText, setPopinText] = useState(null);
 
     const groupSpeed = useInput(120);
 
@@ -95,6 +104,10 @@ const HomePage = forwardRef((props: IProps) => {
     // --------------------------------------------------------------------------------- USE EFFECTS
 
     useEffect(() => {
+
+        if(key === EKeys.VALIDATE){emptyNotifications();return;}
+        if(state.notifications.length>0)return;
+
         switch (key) {
             case EKeys.ADD_FIVE_FEET: addFeet(5); return;
             case EKeys.ADD_TEN_FEET: addFeet(10); return;
@@ -128,11 +141,6 @@ const HomePage = forwardRef((props: IProps) => {
         dispatch({ type: "UPDATE_TIMED_EVENTS" })
     }, [state.turn]);
 
-    useEffect(() => {
-
-        // localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    }, [state])
-
 
     // --------------------------------------------------------------------------- HANDLERS
 
@@ -154,8 +162,6 @@ const HomePage = forwardRef((props: IProps) => {
 
         if (!eventName.value || !eventLife.value) return;
 
-        console.log(eventRepeat.value);
-
         dispatch({
             type: "ADD_EVENT", payload: {
                 name: eventName.value,
@@ -171,6 +177,8 @@ const HomePage = forwardRef((props: IProps) => {
         })
     }
 
+    const emptyNotifications = () => { dispatch({ type: "EMPTY_NOTIFICATIONS" }); }
+    
     const reset = () => { dispatch({ type: "RESET" }); }
 
     // --------------------------------------------------------------------------- Utils
@@ -184,7 +192,13 @@ const HomePage = forwardRef((props: IProps) => {
     // -------------------–-------------------–-------------------–--------------- RENDER
 
     return <div className={componentName}>
-
+        {
+            state?.notifications?.length > 0 &&
+            <Popin
+                text={state.notifications.reduce((accumulator: string, name: string) => { return accumulator +", "+ name })}
+                onClick={emptyNotifications}
+            />
+        }
         <div className={`${componentName}_section`}>
             <h2>Parameters</h2>
             <div className={`${componentName}_line`}>
@@ -240,4 +254,18 @@ const HomePage = forwardRef((props: IProps) => {
 
 export default HomePage;
 
+/*
+const usePopin = (pInitialText:string)=>{
 
+    const [text, setText] = useState(pInitialText);
+
+    const onChange = (e: any) => {
+        //setText(e.target.type=="checkbox"?e.target.checked:e.target.value)
+    };
+
+    return {
+        text,
+        onChange
+    };
+
+}*/

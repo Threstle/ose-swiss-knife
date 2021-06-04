@@ -26,6 +26,7 @@ function App() {
     let vh = window.innerHeight * 0.01;
     // Set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty("--vh", `${vh}px`);
+    console.log(vh);
   }
 
   // --------------------------------------------------------------------- RESIZE GLOBAL HANDLER
@@ -41,7 +42,7 @@ function App() {
 
   return (
     <div className={componentName}>
-      <h1 className={`${componentName}_title`}>B/X Swiss Knife</h1>
+      <h1 className={`${componentName}_title`}>B/X Time Tracker</h1>
       <Stack />
     </div>
   );

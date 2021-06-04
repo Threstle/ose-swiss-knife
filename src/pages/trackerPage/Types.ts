@@ -12,6 +12,7 @@ export const enum EKeys {
     ADD_NINETY_FEET = 105,
     ADD_TURN = 107,
     ADD_TORCH = 84,
+    VALIDATE = 13,
     RESET = 82,
 }
 
@@ -26,5 +27,6 @@ export type TimedEvent = {
 export type State = {
     turn: number;
     turnFraction: number;
-    timedEvents: TimedEvent[]
+    timedEvents: TimedEvent[];
+    notifications: string[];
 }
