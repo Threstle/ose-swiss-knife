@@ -192,6 +192,7 @@ const HomePage = forwardRef((props: IProps) => {
     // -------------------–-------------------–-------------------–--------------- RENDER
 
     return <div className={componentName}>
+              <h1 className={`${componentName}_title`}>B/X Time Tracker</h1>
         {
             state?.notifications?.length > 0 &&
             <Popin

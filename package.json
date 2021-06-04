@@ -45,6 +45,7 @@
     "@cher-ami/router": "^1.0.0",
     "gsap": "^3.6.1",
     "immer": "^9.0.2",
+    "mathjs": "^9.4.1",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "use-immer": "^0.5.2"

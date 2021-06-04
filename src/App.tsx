@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect } from "react";
-import { Stack } from "@cher-ami/router";
+import { Link, Stack } from "@cher-ami/router";
 import "./App.less";
 
 const componentName = "App";
@@ -42,7 +42,9 @@ function App() {
 
   return (
     <div className={componentName}>
-      <h1 className={`${componentName}_title`}>B/X Time Tracker</h1>
+       <nav>
+
+      </nav>
       <Stack />
     </div>
   );
