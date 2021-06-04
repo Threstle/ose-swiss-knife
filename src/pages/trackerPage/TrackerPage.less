@@ -12,8 +12,51 @@
     .font-roboto-regular();
   }
 
+  h2{
+    .sectionTitle();
+  }
+
+  h3{
+    .inputText();
+  }
+
+  button
+  {
+    padding: 1rem 2rem;
+    margin: 1rem;
+    background-color: transparent;
+  }
+
   // ----------------------------------------------------------------------------- BLOCK
 
+  &_subSection
+  {
+    border: dashed 1px rgba(30,30,30,0.2);
+    //background-color: @ose-green;
+    margin: 1rem;
+  }
+
+  &_line
+  {
+
+    margin: 1rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    label,input
+    {
+      margin-right: 1rem;
+      .inputText();
+    }
+
+  }
+
+  &_event
+  {
+    justify-content: space-between;
+    display: flex;
+  }
+
+  
   // ----------------------------------------------------------------------------- ELEMENTS
 
 

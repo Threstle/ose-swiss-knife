@@ -53,13 +53,13 @@ const reducer = (state: State, action) => {
                 event.remainingTurns = event.beginning + event.length - state.turn;
                 if (event.remainingTurns <= 0) {
 
-                   // alert(event.name);
+                    // alert(event.name);
 
                     if (event.repeat) {
                         event.beginning = state.turn;
                         event.remainingTurns = event.length;
                     }
-                    
+
                 }
 
                 return event;
@@ -184,37 +184,53 @@ const HomePage = forwardRef((props: IProps) => {
     // -------------------–-------------------–-------------------–--------------- RENDER
 
     return <div className={componentName}>
-        <div>
-            <label>Group speed : </label>
-            <input onChange={groupSpeed.onChange} value={groupSpeed.value} name="eventName" type="text" />
-        </div>
-        <h1>Timer</h1>
-        <h2>Turn : {state.turn}</h2>
-        <h2>Turn advancement : {state.turnFraction} %</h2>
-        <h1>Actions</h1>
-        <button onClick={addTurn}>Add turn</button>
-        <button onClick={() => addFeet(5)}>Add 5"</button>
-        <button onClick={() => addFeet(10)}>Add 10"</button>
-        <button onClick={addTorch}>Add Torch</button>
-        <button onClick={addCustomEvent}>Add Custom Event</button>
-        <div>
-            <div>
-                <label>Event name</label>
-                <input name="eventName" type="text" {...eventName} />
-            </div>
-            <div>
-                <label>Event life/delay</label>
-                <input name="eventLife" type="number" min="1" {...eventLife} />
-            </div>
-            <div>
-                <label>Repeats</label>
-                <input name="eventRecuring" type="checkbox" onChange={eventRepeat.onChange} checked={eventRepeat.value} />
+
+        <div className={`${componentName}_section`}>
+            <h2>Parameters</h2>
+            <div className={`${componentName}_line`}>
+                <label>Group speed : </label>
+                <input onChange={groupSpeed.onChange} value={groupSpeed.value} name="eventName" type="text" />
             </div>
         </div>
-        <h1>Events</h1>
+
+        <div className={`${componentName}_section`}>
+            <h2>Timer</h2>
+            <div className={`${componentName}_line`}>
+                <h3>Turn : {state.turn}</h3>
+            </div>
+            <div className={`${componentName}_line`}>
+                <h3>Turn advancement : {state.turnFraction} %</h3>
+            </div>
+        </div>
+
+        <div className={`${componentName}_section`}>
+            <h2>Actions</h2>
+            <button onClick={addTurn}>Add turn</button>
+            <button onClick={() => addFeet(5)}>Add 5"</button>
+            <button onClick={() => addFeet(10)}>Add 10"</button>
+            <button onClick={addTorch}>Add Torch</button>
+            <div className={`${componentName}_subSection`}>
+                <div className={`${componentName}_line`}>
+                    <label>Event name</label>
+                    <input name="eventName" type="text" {...eventName} />
+                </div>
+                <div className={`${componentName}_line`}>
+                    <label>Event life/delay</label>
+                    <input name="eventLife" type="number" min="1" {...eventLife} />
+                </div>
+                <div className={`${componentName}_line`}>
+                    <label>Repeats</label>
+                    <input name="eventRecuring" type="checkbox" onChange={eventRepeat.onChange} checked={eventRepeat.value} />
+                </div>
+                <button onClick={addCustomEvent}>Add Custom Event</button>
+            </div>
+        </div>
+        <div className={`${componentName}_section`}>
+            <h2>Events</h2>
+        </div>
         <ul>
             {state.timedEvents.map((event: any, index: number) => {
-                return <li key={index}>
+                return <li key={index} className={`${componentName}_event`}>
                     <h3>{event.name} : {event.remainingTurns}</h3><button onClick={() => removeEvent(index)}>X</button>
                 </li>
             })}
